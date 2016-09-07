@@ -8,8 +8,8 @@ function cleanup_vagrant {
 }
 trap cleanup_vagrant EXIT
 
-git clone -b ansible-role-refactor git@github.com:girder/girder.git "$DIR"
 pushd "$DIR"
+git clone -b ansible-role-refactor git@github.com:girder/girder.git .
 
 # Run on girder master
 mkdir build && pushd build
