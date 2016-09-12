@@ -36,3 +36,10 @@ ctest_submit(PARTS Build)
 # CTest
 ctest_test(INCLUDE_LABEL "^girder_ansible")
 ctest_submit(PARTS Test)
+
+# Submit logs as a note
+file(STRINGS "${CTEST_BINARY_DIRECTORY}/Testing/TAG" tag_info)
+list(GET tag_info 0 tag_info)
+list(APPEND CTEST_NOTES_FILES
+  "${CTEST_BINARY_DIRECTORY}/Testing/Temporary/LastTest_${tag_info}.log")
+ctest_submit(PARTS Notes)
