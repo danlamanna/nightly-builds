@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+export PATH="/home/dan/bin:$PATH"
 
 NOW=$(date)
 echo "[$NOW] START CDash Vagrant"
