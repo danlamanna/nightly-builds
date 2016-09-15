@@ -16,11 +16,19 @@ function cleanup_vagrant {
 trap cleanup_vagrant EXIT
 
 pushd "$DIR"
-git clone -b ansible-role-refactor git@github.com:girder/girder.git .
+git clone git@github.com:girder/girder.git .
 
 # Run on girder master
 mkdir build && pushd build
 SOURCE_DIR="$DIR" /home/dan/tmp/cmake/bin/ctest --repeat-until-pass 5 -S /home/dan/builds/girder/vagrant.cmake -VV
+
+popd && rm -rf build
+
+# Run on 2.0 integration branch
+git checkout 2.0-integration
+mkdir build && pushd build
+SOURCE_DIR="$DIR" /home/dan/tmp/cmake/bin/ctest --repeat-until-pass 5 -S /home/dan/builds/girder/vagrant.cmake -VV
+
 
 # Run on latest girder tag
 # git checkout "$(git describe --tags $(git rev-list --tags --max-count=1))"
