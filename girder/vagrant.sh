@@ -2,6 +2,11 @@
 set -e
 
 export PATH="/home/dan/bin:$PATH"
+if [ "$#" -ne 1 ]; then
+    export TEST_GROUP="Nightly"
+else
+    export TEST_GROUP="$1"
+fi
 
 DIR=$(mktemp -d)
 

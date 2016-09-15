@@ -17,7 +17,7 @@ set(CTEST_BUILD_NAME "ansible-tests-${GIT_REVISION}")
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(CTEST_UPDATE_COMMAND "git")
 
-ctest_start("Experimental")
+ctest_start("$ENV{TEST_GROUP}")
 ctest_update(SOURCE "${CTEST_SOURCE_DIRECTORY}")
 ctest_submit(PARTS Start Update)
 
