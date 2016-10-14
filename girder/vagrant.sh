@@ -11,7 +11,13 @@ fi
 DIR=$(mktemp -d)
 
 function cleanup_vagrant {
-    cd "$DIR" && vagrant destroy --force && rm -rf "$DIR"
+    # Vagrant boxes are destroyed through the tests
+
+    # Run vagrant destroy if a machine is still running (the tests failed to shut it down)
+
+
+    # Delete the top level directory made for this run
+    rm -rf "$DIR"
 }
 trap cleanup_vagrant EXIT
 
@@ -24,12 +30,7 @@ SOURCE_DIR="$DIR" /home/dan/tmp/cmake/bin/ctest --repeat-until-pass 5 -S /home/d
 
 popd && rm -rf build
 
-# Run on 2.0 integration branch
-git checkout 2.0-integration
-mkdir build && pushd build
-SOURCE_DIR="$DIR" /home/dan/tmp/cmake/bin/ctest --repeat-until-pass 5 -S /home/dan/builds/girder/vagrant.cmake -VV
-
-
 # Run on latest girder tag
-# git checkout "$(git describe --tags $(git rev-list --tags --max-count=1))"
-# ctest -S vagrant.cmake -VV
+mkdir build && pushd build
+git checkout "$(git describe --tags $(git rev-list --tags --max-count=1))"
+SOURCE_DIR="$DIR" /home/dan/tmp/cmake/bin/ctest --repeat-until-pass 5 -S /home/dan/builds/girder/vagrant.cmake -VV
