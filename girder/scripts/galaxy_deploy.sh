@@ -7,6 +7,11 @@ SUBTREE_PREFIX="devops/ansible/roles/girder"
 SUBTREE_DEST_REPO="git@github.com:girder/ansible-role-girder.git"
 SUBTREE_DEST_BRANCH="master"
 
+function cleanup_scratch {
+    rm -rf "$DIR"
+}
+trap cleanup_scratch EXIT
+
 pushd "$DIR"
 git clone git@github.com:girder/girder.git .
 
