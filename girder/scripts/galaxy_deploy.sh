@@ -22,4 +22,5 @@ if  [ -f "$DEPLOYED_FILE" ] && grep -q "$(git rev-parse HEAD)" "$DEPLOYED_FILE";
 else
     git subtree push --prefix="$SUBTREE_PREFIX" "$SUBTREE_DEST_REPO" "$SUBTREE_DEST_BRANCH"
     git rev-parse HEAD >> "$DEPLOYED_FILE"
+    ansible-galaxy import girder ansible-role-girder
 fi
